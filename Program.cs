@@ -23,7 +23,7 @@ namespace Assignment1
             Console.WriteLine("none");
 
             Console.WriteLine(o1.EmpNo);
-            Console.WriteLine("empno");
+            //Console.WriteLine("empno");
             Console.WriteLine(o2.EmpNo);
             Console.WriteLine(o3.EmpNo);
 
@@ -102,10 +102,10 @@ namespace Assignment1
         public Employee(string name = null, decimal basic = 0, short deptno = 0)
         {
             Empnoc++;
-            empno = Empnoc;
-            this.Name = name;
-            this.Basic = basic;
-            this.DeptNo = deptno;
+            EmpNo = Empnoc;
+            this.Name = Name;
+            this.Basic = Basic;
+            this.DeptNo = DeptNo;
         }
 
 
