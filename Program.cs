@@ -4,110 +4,187 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assignment1
+namespace Assignment2
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main( )
         {
-            Employee o1 = new Employee("Amol", 123465, 10);
-            Console.WriteLine("all accepted");
-
-            Employee o2 = new Employee("Amol", 123465);
-            Console.WriteLine("dept");
-
-            Employee o3 = new Employee("Amol");
-            Console.WriteLine("dept and Basics");
-
-            Employee o4 = new Employee();
-            Console.WriteLine("none");
-
-            Console.WriteLine(o1.EmpNo);
-            //Console.WriteLine("empno");
-            Console.WriteLine(o2.EmpNo);
-            Console.WriteLine(o3.EmpNo);
-
-            Console.WriteLine(o3.EmpNo);
-            Console.WriteLine(o2.EmpNo);
-            Console.WriteLine(o1.EmpNo);
+            GeneralManager e1 = new GeneralManager("shiva", 20, 12000.0m, "HR", "hhhh");
+            Console.WriteLine(e1.EmpNo);
+            Console.WriteLine(e1.Name);
+            Console.WriteLine(e1.DeptNo);
+            Console.WriteLine(e1.Basic);
+            Console.WriteLine(e1.CalcNetSalary());
+            Console.WriteLine(e1.Designation);
+            Console.WriteLine(e1.Perks);
+            Console.WriteLine("==================");
+            GeneralManager e2 = new GeneralManager("sham", 20, 13000.0m, "cs", "hhhh");
+            Console.WriteLine(e2.EmpNo);
+            Console.WriteLine(e2.Name);
+            Console.WriteLine(e2.DeptNo);
+            Console.WriteLine(e2.Basic);
+            Console.WriteLine(e2.CalcNetSalary());
+            Console.WriteLine(e2.Designation);
+            Console.WriteLine(e2.Perks);
+            Console.WriteLine(e1.EmpNo);
+            Console.WriteLine(e2.EmpNo);
+            Console.ReadLine();
         }
     }
 
-    class Employee
+    public abstract class Employee
     {
         private string name;
         public string Name
         {
             set
             {
-                if (value != null)
+                if (value != "")
                     name = value;
                 else
-                    Console.WriteLine("Name should not be null");
+                    Console.WriteLine("invalid");
             }
             get
             {
                 return name;
             }
         }
-        private static int Empnoc = 0;
-        private int empno;
+
+        private static int count = 0;
+        private int empNo;
         public int EmpNo
         {
-            set
+            private set
             {
+                empNo = value;
+            }
+            get
+            {
+                return empNo;
+            }
+        }
 
-            }
-            get
-            {
-                return empno;
-            }
-        }
-        private decimal basic;
-        public decimal Basic
-        {
-            set
-            {
-                if (value > 10000 && value < 50000)
-                    basic = value;
-                else
-                    Console.WriteLine("out of range");
-            }
-            get
-            {
-                return basic;
-            }
-        }
-        private short deptno;
+        private short deptNo;
         public short DeptNo
         {
             set
             {
                 if (value > 0)
-                    deptno = value;
+                    deptNo = value;
                 else
                     Console.WriteLine("invalid");
             }
             get
             {
-                return deptno;
+                return deptNo;
             }
         }
-        public decimal GetNetSalary()
+
+        //private decimal basic;
+        public abstract decimal Basic
         {
-            decimal salary;
-            salary = Basic + Basic * 10;
-            return salary;
+            get;
+            set;
         }
-        public Employee(string name = null, decimal basic = 0, short deptno = 0)
+
+        public abstract decimal CalcNetSalary();
+
+        public Employee(string Name, short DeptNo, decimal Basic)
         {
-            Empnoc++;
-            EmpNo = Empnoc;
-            this.Name = Name;
+            count++;
+            EmpNo = count;
             this.Basic = Basic;
+            this.Name = Name;
             this.DeptNo = DeptNo;
         }
+    }
 
+    class Manager : Employee
+    {
+        private string designation;
+        public string Designation
+        {
+            set
+            {
+                if (value != "")
+                    designation = value;
+                else
+                    Console.WriteLine("invalid");
+            }
+            get
+            {
+                return designation;
+            }
+        }
 
+        private decimal basic;
+        public override decimal Basic
+        {
+            get
+            {
+                return basic;
+            }
+            set
+            {
+                basic = value;
+            }
+        }
+        public Manager(string Name, short DeptNo, decimal Basic, string Designation) : base(Name, DeptNo, Basic)
+        {
+            this.Designation = Designation;
+        }
+        public override decimal CalcNetSalary()
+        {
+            decimal salary = Basic * 12;
+            return salary;
+        }
+    }
+
+    class GeneralManager : Manager
+    {
+        private string perks;
+        public string Perks
+        {
+            set
+            {
+                perks = value;
+            }
+            get
+            {
+                return perks;
+            }
+        }
+
+        public GeneralManager(string Name, short DeptNo, decimal Basic, string Designation, string Perks) : base(Name, DeptNo, Basic, Designation)
+        {
+            this.Perks = Perks;
+        }
+    }
+
+    class CEO : Employee
+    {
+        public sealed override decimal CalcNetSalary()
+        {
+            throw new NotImplementedException();
+        }
+        private decimal basic;
+        public override decimal Basic
+        {
+            get
+            {
+                return basic;
+            }
+            set
+            {
+                basic = value;
+            }
+        }
+        public CEO(string Name, short DeptNo, decimal Basic) : base(Name, DeptNo, Basic)
+        {
+
+        }
     }
 }
+    
+
